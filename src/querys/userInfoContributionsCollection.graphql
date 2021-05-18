@@ -1,0 +1,15 @@
+query userContByYear($nameUser:String!, $fromDate:DateTime!, $toDate:DateTime!){
+    user(login:$nameUser) {
+        contributionsCollection (from: $fromDate, to:$toDate){
+            totalIssueContributions,
+            totalCommitContributions,
+            totalRepositoryContributions,
+            totalPullRequestContributions,
+            totalPullRequestReviewContributions,
+            totalRepositoriesWithContributedIssues,
+            totalRepositoriesWithContributedCommits,
+            totalRepositoriesWithContributedPullRequests,
+            totalRepositoriesWithContributedPullRequestReviews
+        }
+    }
+}

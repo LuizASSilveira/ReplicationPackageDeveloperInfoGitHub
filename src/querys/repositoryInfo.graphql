@@ -1,0 +1,51 @@
+query repositoryInf($numPage:Int!, $nameUser: String!, $RepositoryAffiliation : [RepositoryAffiliation!]){
+  user(login: $nameUser) {
+    repositories(ownerAffiliations: $RepositoryAffiliation, first: $numPage) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      nodes {
+        nameWithOwner
+        url
+        pushedAt
+        forkCount
+        stargazers {
+          totalCount
+        }
+        issues {
+          totalCount
+        }
+        primaryLanguage {
+          name
+        }
+        licenseInfo {
+          name
+          nickname
+        }
+        labels {
+          totalCount
+        }
+        releases {
+          totalCount
+        }
+        assignableUsers {
+          totalCount
+        }
+        commitComments {
+          totalCount
+        }
+        watchers {
+          totalCount
+        }
+        description
+        diskUsage
+        isFork
+        isLocked
+        isMirror
+        isPrivate
+        isArchived
+      }
+    }
+  }
+}

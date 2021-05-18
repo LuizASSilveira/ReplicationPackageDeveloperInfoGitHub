@@ -1,0 +1,48 @@
+query userRepositoryCommit($idUser: ID!, $numPageIssues: Int!, $owner: String!, $name: String!) {
+  repository(owner: $owner, name: $name) {
+    defaultBranchRef {
+      target {
+        ... on Commit {
+          history(author: {id: $idUser}, first: $numPageIssues) {
+            totalCount
+            pageInfo {
+              endCursor
+              hasNextPage
+            }
+            nodes {
+              url
+              pushedDate
+              comments {
+                totalCount
+              }
+              deployments {
+                totalCount
+              }
+              status {
+                state
+              }
+              committedDate
+              authoredByCommitter
+              authoredDate
+              changedFiles
+              additions
+              deletions
+              message
+              messageBody
+              author {
+                user {
+                  login
+                }
+              }
+              committer {
+                user {
+                  login
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

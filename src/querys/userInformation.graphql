@@ -1,0 +1,63 @@
+query userInfo($nameUser:String!){
+    user(login:$nameUser) {
+          id
+          avatarUrl
+          bio
+          login
+          url
+          websiteUrl
+          location
+          email
+          name
+          createdAt
+          location
+          company
+
+          gistComments {
+              totalCount
+          }
+          watching {
+              totalCount
+          }
+          followers {
+              totalCount
+          }
+          following {
+              totalCount
+          }
+          repositories{
+            totalCount
+          }
+          issues {
+              totalCount
+          }
+          organizations(first: 100) {
+              totalCount
+              pageInfo {
+                  endCursor
+                  hasNextPage
+              }
+              nodes {
+                  name
+              }
+          }
+          projects {
+              totalCount
+          }
+          gists {
+              totalCount
+          }
+          gistComments{
+            totalCount
+          }
+          pullRequests {
+              totalCount
+          }
+          commitComments {
+              totalCount
+          }
+          issueComments {
+              totalCount
+          }
+    }
+ }

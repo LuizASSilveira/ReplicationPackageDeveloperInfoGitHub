@@ -1,0 +1,56 @@
+query repositoryInfNext($numPage:Int!, $nameUser: String!, $RepositoryAffiliation : [RepositoryAffiliation!], $after: String!){
+  rateLimit {
+    cost
+    remaining
+    resetAt
+  }
+  user(login: $nameUser) {
+    repositories(ownerAffiliations: $RepositoryAffiliation, first: $numPage,  after: $after) {
+      pageInfo {
+        endCursor
+        hasNextPage
+      }
+      nodes {
+        nameWithOwner
+        url
+        pushedAt
+        forkCount
+        stargazers {
+          totalCount
+        }
+        issues {
+          totalCount
+        }
+        primaryLanguage {
+          name
+        }
+        licenseInfo {
+          name
+          nickname
+        }
+        labels {
+          totalCount
+        }
+        releases {
+          totalCount
+        }
+        assignableUsers {
+          totalCount
+        }
+        commitComments {
+          totalCount
+        }
+        watchers {
+          totalCount
+        }
+        description
+        diskUsage
+        isFork
+        isLocked
+        isMirror
+        isPrivate
+        isArchived
+      }
+    }
+  }
+}
