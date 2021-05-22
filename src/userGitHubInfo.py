@@ -32,12 +32,9 @@ def getUserInfByYear(loginUser, dateCreated):
             "fromDate": '{}-01-01T04:00:00Z'.format(yearCreated),
             "toDate": '{}-12-31T23:59:59Z'.format(yearCreated),
         }
-        # print(query)
-        # print(queryVariables)
 
         query = getQueryFile('userInfoContributionsCollection')
         userYearInfo[yearCreated] = requestApiGitHubV4(query, queryVariables)['data']['user']["contributionsCollection"]
-        # print('{}: {}'.format(yearCreated, list(userYearInfo[yearCreated].values())))
         keys = userYearInfo[yearCreated].keys()
         yearCreated += 1
 
@@ -49,29 +46,24 @@ def repositoryUser(loginUser, numPage=80):
         "nameUser": loginUser,
         "numPage": numPage
     }
-    # repositoryAffiliation = {'OWNER': [], 'COLLABORATOR': [], 'ORGANIZATION_MEMBER': []}
     repositoryAffiliation = {'OWNER': [], 'COLLABORATOR': []}
     for repAff in repositoryAffiliation.keys():
-        # print("\n")
         queryVariables["RepositoryAffiliation"] = repAff
         query = getQueryFile('repositoryInfo')
         while True:
             resp = requestApiGitHubV4(query, queryVariables)
             for rep in resp['data']['user']['repositories']['nodes']:
-                # print(repAff + '---> ' + rep["nameWithOwner"])
                 repositoryAffiliation[repAff].append(rep)
             if not resp['data']['user']['repositories']['pageInfo']['hasNextPage']:
                 break
             query = getQueryFile('repositoryInfNext')
             queryVariables["after"] = resp['data']['user']['repositories']['pageInfo']['endCursor']
-    # return repositoryAffiliation['OWNER'], repositoryAffiliation['COLLABORATOR'], repositoryAffiliation['ORGANIZATION_MEMBER']
     return repositoryAffiliation['OWNER'], repositoryAffiliation['COLLABORATOR']
 
 
 def getUserRepositoryCommit(userID, arrayRepository, numPage=100):
     arrayCommits = []
     for index, repository in enumerate(arrayRepository):
-        # print(index, '-> ', repository['nameWithOwner'])
         owner, name = repository['nameWithOwner'].split('/')
         if name == "linux":
             'Ignorou repositorio linux por nao retornar o historico via api'
@@ -87,14 +79,12 @@ def getUserRepositoryCommit(userID, arrayRepository, numPage=100):
 
         while True:
             resp = requestApiGitHubV4(query, queryVariables)
-            # print(resp)
             if not resp['data']['repository']['defaultBranchRef'] or \
                     resp['data']['repository']['defaultBranchRef']['target']['history']['totalCount'] == 0:
                 break
 
             resp = resp['data']['repository']['defaultBranchRef']['target']['history']
             for number, commit in enumerate(resp['nodes']):
-                # print(number, commit['url'])
                 arrayCommits.append(commit)
 
             if not resp['pageInfo']['hasNextPage']:

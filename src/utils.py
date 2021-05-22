@@ -58,6 +58,7 @@ def saveDictCSV(data, orient, columns, path):
 def createFolderIfDoesntExist(standardDirectory):
     if not os.path.exists(standardDirectory):
         os.mkdir(standardDirectory)
+    return standardDirectory + '\\'
 
 
 def saveJson(data, path, typeOpen='w', encodingFile='UTF-8'):
